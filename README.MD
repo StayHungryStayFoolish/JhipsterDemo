@@ -1,6 +1,6 @@
 # JHipster 搭建微服务应用
 
-## JHipster 操作步骤
+## JHipster 4.12.0 版本 操作步骤
 
 1. mkdir jhipster
 
