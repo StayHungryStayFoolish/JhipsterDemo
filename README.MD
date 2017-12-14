@@ -427,4 +427,107 @@ scheme.sql 填写项目名字
 
     - AngularJS 1.x
 
+16. Would you like to enable *SASS* support using the LibSass stylesheet preprocessor? (y/N)
 
+    - 建议使用gulp定时构建，将sass转换成css而不是运行时处理
+
+    - y
+
+17. Would you like to enable internationalization support? (Y/n)
+
+    - 是否选用国际化支持
+
+    - Y
+
+18. Please choose the native language of the application (Use arrow keys)
+
+    - Chinese (Simplified)
+
+19. Please choose additional languages to install
+
+    - 任意选
+
+20. Besides JUnit and Karma, which testing frameworks would you like to use?
+    (Press <space> to select, <a> to toggle all, <i> to inverse selection)
+
+    - 选择压力测试
+
+        - ✅ Gatling
+
+            - 使用 Gatling 进行性能测试。
+
+        - Cucumber
+
+            - 使用 Cucumber 模拟用户行为
+
+        - Protractor
+
+            - 使用 Protractor 对 AngularJS 进行集成测试
+
+21. Would you like to install other generators from the JHipster Marketplace? (y/N)
+
+    - 是否从 JHipster 市场安装其他应用
+
+    - N
+
+22. ./mvnw 启动应用
+
+    yarn start 启动开发
+
+## 基于 JHipster 4.12.0 版本 创建微服务应用
+
+1. mkdir microservice
+
+2. cd microservice
+
+3. yo jhipster
+
+4. Which *type* of application would you like to create? (Use arrow keys)
+
+    - Microservice application  微服务应用
+
+5. What is the base name of your application? (microservice)
+
+    - microservice
+
+6. As you are running in a microservice architecture, on which port would like your server to run?
+   It should be unique to avoid port conflicts. (8081)
+
+    - 设置运行微服务应用的端口号
+
+    - 8081
+
+7. What is your default Java package name? (com.jhipster.demo)
+
+    - src 包路径
+
+    - com.jhipster.demo
+
+8. Which service discovery server do you want to use? (Use arrow keys)
+
+    - 选择注册服务中心
+
+    - ✅ JHipster Registry (using Eureka and Spring Cloud Config)
+
+9. Which *type* of authentication would you like to use? (Use arrow keys)
+
+    - 选择身份认证
+
+    - ✅ Authentication with JHipster UAA server (the server must be generated separate
+      ly)
+
+        - JHipster UAA 身份校验中心（服务器必须单独生成）
+
+10. What is the folder path of your UAA application? (../uaa)
+
+     - 设置 uaa 身份验证程序的 的路径
+
+     - ../uaa
+
+11. Which *type* of database would you like to use? (Use arrow keys)
+
+     - 选择数据库类型
+
+     - ✅ SQL
+
+12.
