@@ -255,9 +255,15 @@ scheme.sql 填写项目名字
 
    - Yes, with ehcache (local cache, for a single node)
 
+       - 本地缓存方案 ehcache
+
    - ✅ Yes, with HazelCast (distributed cache, for multiple nodes)
 
+       - 集群缓存方案，多节点缓存，适合多微服务的分布式环境
+
    - [BETA] Yes, with Infinispan (hybrid cache, for multiple nodes)
+
+       -  ????
 
    - No
 
@@ -402,7 +408,6 @@ scheme.sql 填写项目名字
 
             - 搜索引擎
 
-
          - Clustered HTTP sessions using Hazelcast
 
             - 使用Hazelcast管理http session集群
@@ -530,4 +535,74 @@ scheme.sql 填写项目名字
 
      - ✅ SQL
 
-12.
+12. Which *production* database would you like to use? (Use arrow keys)
+
+    - 选择生产环境数据库
+
+    -MySQL
+
+13. Which *development* database would you like to use? (Use arrow keys)
+
+    - 开发环境，选择数据库产品
+
+        - ✅ H2 with disk-based persistence
+
+            - 数据存储在磁盘的H2
+
+14. Do you want to use Hibernate 2nd level cache? (Use arrow keys)
+
+    - Yes, with ehcache (local cache, for a single node)
+
+        - 本地缓存方案 ehcache
+
+    - Yes, with HazelCast (distributed cache, for multiple nodes)
+
+        - 集群缓存方案，多节点缓存，适合多微服务的分布式环境
+
+    - [BETA] Yes, with Infinispan (hybrid cache, for multiple nodes)
+
+        - ????
+
+    - No
+
+15. Would you like to use Maven or Gradle for building the backend? (Use arrow keys)
+
+    - 选择构建工具
+
+    - ✅ Maven
+
+    - Gradle
+
+16. Which other technologies would you like to use?
+    (Press <space> to select, <a>to toggle all, <i> to inverse selection)
+
+    - 选择其他应用技术
+
+    - Search engine using Elasticsearch
+
+        - 集成搜索开源搜索引擎
+
+    - API first development using swagger-codegen
+
+        -  ？？？
+
+    - Asynchronous messages using Apache Kafka
+
+        - 高吞吐量的分布式发布订阅消息系统
+
+17. Would you like to enable internationalization support? (Y/n)
+
+    - 是否支持国际化（多版本语言）
+
+    - n
+
+18. Besides JUnit and Karma, which testing frameworks would you like to use?
+    (Press <space> to select, <a> to toggle all, <i> to inverse selection)
+
+    - 选择测试框架
+
+    - Gatling
+
+        -
+
+    - Cucumber
