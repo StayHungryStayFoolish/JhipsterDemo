@@ -366,6 +366,65 @@ scheme.sql 填写项目名字
 
             - OAuth2的认证实现(无状态)
 
-10.
+10. Which *type* of database would you like to use? (Use arrow keys)
+
+    - 选择数据库类型
+
+    - MySQL
+
+11. Which *production* database would you like to use? (Use arrow keys)
+
+    - 选择生产环境的数据库
+
+    - MySQL
+
+12. Which *development* database would you like to use? (Use arrow keys)
+
+    - 开发环境，选择数据库产品
+
+       - ✅ H2 with disk-based persistence
+
+           - 数据存储在磁盘的H2
+
+13.  Would you like to use Maven or Gradle for building the backend? (Use arrow keys)
+
+    - 选择构建工具
+
+    - ✅ Maven
+
+    - Gradle
+
+14. Which other technologies would you like to use? (Press <space> to select, <a>to toggle all, <i> to inverse selection)
+
+    - 可选技术，使用空格多选
+
+         - Search engine using Elasticsearch
+
+            - 搜索引擎
+
+
+         - Clustered HTTP sessions using Hazelcast
+
+            - 使用Hazelcast管理http session集群
+
+         - WebSockets using Spring Websocket
+
+            - 使用Spring Websocket
+
+         - API first development using swagger-codegen
+
+            - ???
+
+         - [BETA] Asynchronous messages using Apache Kafka
+
+            - Apache Kafka 是一种高吞吐量的分布式发布订阅消息系统
+
+15. Which *Framework* would you like to use for the client? (Use arrow keys)
+
+    - 选择前端框架
+
+    - ✅ Angular 5
+
+    - AngularJS 1.x
 
 
