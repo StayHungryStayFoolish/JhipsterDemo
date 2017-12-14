@@ -664,9 +664,19 @@ scheme.sql 填写项目名字
 
 ## JHipster 创建 Entity
 
-1. 创建实体 author
+`假设：author 作者、 book 书 `
 
-    - yo jhipster:entity author
+`一个作者可以有多本书，一本书只能有一个作者`
+
+`则：作者 1 --> 书 N   书 N --> 作者 1`
+
+`下边选项会出现 relationship 选项`
+
+**author 实体和下边步骤一样，当前 author 已创建**
+
+1. cd app 项目目录创建实体 book
+
+    - yo jhipster:entity book
 
 2. Do you want to add a field to your entity? (Y/n)
 
@@ -761,5 +771,104 @@ birthDate (LocalDate)
 13. What is the name of the relationship?
 
     - 输入关联关系的实体类名
+
+14. When you display this relationship with Angular, which field from 'author' do
+    you want to use? This field will be displayed as a String, so it cannot be a Blo
+    b (id)
+
+    - 关联 id
+
+    - id
+
+15. Do you want to add any validation rules to this relationship? (y/N)
+
+    - 是否需要添加规则
+
+    - N
+
+================= Book =================
+
+Fields
+
+name (String)
+
+birthDate (LocalDate)
+
+price (BigDecimal)
+
+Relationships
+
+author (Author) many-to-one
+
+16. Do you want to add a relationship to another entity? (Y/n)
+
+    - n
+
+17. Do you want to use a Data Transfer Object (DTO)? (Use arrow keys)
+
+    - ✅ No, use the entity directly
+
+        - 是否创建DTO?
+
+    - [BETA] Yes, generate a DTO with MapStruct
+
+18. Do you want to use separate service class for your business logic? (Use arrow keys)
+
+    - ✅ No, the REST controller should use the repository directly
+
+        - 对于业务逻辑是否使用分离的服务类,使用REST controller和repository
+
+    - Yes, generate a separate service class
+
+    - Yes, generate a separate service interface and implementation
+
+19. Do you want pagination on your entity?
+
+    - 是否分页
+
+    - ✅ No
+
+    - Yes, with pagination links
+
+    - Yes, with infinite scroll
+
+20. 自动显示
+
+        Everything is configured, generating the entity...
+
+           create .jhipster/Book.json
+           create src/main/resources/config/liquibase/changelog/20171214154350_added_entity_Book.xml
+           create src/main/resources/config/liquibase/changelog/20171214154350_added_entity_constraints_Book.xml
+           create src/main/java/com/jhipster/demo/domain/Book.java
+           create src/main/java/com/jhipster/demo/repository/BookRepository.java
+           create src/main/java/com/jhipster/demo/web/rest/BookResource.java
+           create src/test/java/com/jhipster/demo/web/rest/BookResourceIntTest.java
+         conflict src/main/resources/config/liquibase/master.xml
+
+Overwrite src/main/resources/config/liquibase/master.xml? (ynaxdH)
+
+  - y) overwrite
+
+  - n) do not overwrite
+
+  - ✅ a) overwrite this and all others
+
+  - x) abort
+
+  - d) show the differences between the old and the new
+
+  - h) Help, list all options
+
+  Answer: 输入 a
+
+21. ✨  Done in 26.85s
+
+#### 创建实体类，推荐使用 JDL Studio  https://start.jhipster.tech/jdl-studio/
+
+![](img/jdl.jpg)
+
+
+
+
 
 
