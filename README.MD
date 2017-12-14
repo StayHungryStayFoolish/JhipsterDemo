@@ -662,4 +662,104 @@ scheme.sql 填写项目名字
 
    - admin 密码
 
+## JHipster 创建 Entity
+
+1. 创建实体 author
+
+    - yo jhipster:entity author
+
+2. Do you want to add a field to your entity? (Y/n)
+
+    - 是否添加 `域`
+
+    - y
+
+3. What is the name of your field?
+
+    - 定义 `域名`
+
+    - name
+
+4. What is the type of your field? (Use arrow keys)
+
+   - 定义 `域` 属性
+
+   - ✅ String
+
+   - Integer
+
+   - Long
+
+   - Float
+
+   - Double
+
+   - BigDecimal
+
+   - LocalDate
+
+   - ...
+
+5. Do you want to add validation rules to your field? (y/N)
+
+    - 是否给 `域` 增加规则
+
+    - n
+
+================= Book =================
+
+Fields
+
+name (String)
+
+6. Generating field #2
+
+   Do you want to add a field to your entity? (Y/n)
+
+   - 是否再添加 `域`
+
+   - Y
+
+7. What is the name of your field?
+
+    - 定义 `域名`
+
+    - birthDate
+
+8. What is the type of your field? (Use arrow keys)
+
+    - 定义 `域` 属性
+
+    - LocalDate
+
+9. Do you want to add validation rules to your field?(y/N)
+
+    - N
+
+================= Book =================
+
+Fields
+
+name (String)
+
+birthDate (LocalDate)
+
+10. Do you want to add a field to your entity? (Y/n)
+
+    - N 停止创建 `域`
+
+11. Do you want to add a relationship to another entity? (Y/n)
+
+    - 是否创建实体类之间的关联关系
+
+    - Y
+
+12. What is the name of the other entity?
+
+    - 输入关联关系的实体类名
+
+13. What is the name of the relationship?
+
+    - 输入关联关系的实体类名
+
 
