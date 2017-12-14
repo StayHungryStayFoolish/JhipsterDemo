@@ -601,8 +601,19 @@ scheme.sql 填写项目名字
 
     - 选择测试框架
 
-    - Gatling
+    - ✅ Gatling
 
-        -
+        - 使用 Gatling 进行性能测试。
 
     - Cucumber
+
+        - 使用 Cucumber 模拟用户行为
+
+19. Would you like to install other generators from the JHipster Marketplace? (y/N)
+
+    - 是否从 JHipster 市场安装其他应用
+
+    - N
+
+20. ./mvnw 启动应用
+
