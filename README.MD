@@ -66,7 +66,9 @@
 
     - MongoDB
 
-    - Cassandra
+    - Cassandra 
+    
+        - 不支持分页
 
     - [BETA] Couchbase
 
