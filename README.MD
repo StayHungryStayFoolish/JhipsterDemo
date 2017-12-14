@@ -44,7 +44,7 @@
 
 10. Do you want to use the JHipster Registry to configure, monitor and scale your application?
 
-    - 是否使用 JHipster 注册吧来配置，监控和扩展应用
+    - 是否使用 JHipster 注册来配置，监控和扩展应用
 
     - JWT authentication (stateless, with a token)
 
@@ -293,6 +293,79 @@ scheme.sql 填写项目名字
 
 16. Besides JUnit and Karma, which testing frameworks would you like to use?
 
-   -
+   - 选择压力测试
 
-   -
+   - ✅ Gatling
+
+        - 使用 Gatling 进行性能测试。
+
+   - Cucumber
+
+        - 使用 Cucumber 模拟用户行为
+
+17. Would you like to install other generators from the JHipster Marketplace? (y/N)
+
+   - 是否需要安装其他生成器
+
+   - N
+
+18. ./mvnw 启动项目
+
+## 基于 JHipster 4.12.0 版本 创建微服网关
+
+1. mkdir gateway
+
+2. cd gateway
+
+3. yo jhipster
+
+4. Which *type* of application would you like to create? (Use arrow keys)
+
+    - ✅ Microservice gateway
+
+        - 微服务网关
+
+5. What is the base name of your application? (gateway)
+
+    - 设置应用名字
+
+    - gateway
+
+6. As you are running in a microservice architecture, on which port would like your server to run?
+   It should be unique to avoid port conflicts. (8080)
+
+    - 设置一个端口号
+
+    - 8080
+
+7. What is your default Java package name?(com.jhipster.demo)
+
+    - src 包路径
+
+    - com.jhipster.demo
+
+8. Which service discovery server do you want to use? (Use arrow keys)
+
+    - 选择注册服务中心
+
+    - ✅ JHipster Registry (uses Eureka, provides Spring Cloud Config support and monitoring dashboards)
+
+9. Which *type* of authentication would you like to use?
+
+    - 选择身份验证中心
+
+        - ✅ JWT authentication (stateless, with a token)
+
+            - J(son)W(eb)T(oken)(无状态)
+
+        - Authentication with JHipster UAA server (the server must be generated separately)
+
+            - JHipster UAA 身份校验中心（服务器必须单独生成）
+
+        - OAuth 2.0 / OIDC Authentication (stateful, works with Keycloak and Okta)
+
+            - OAuth2的认证实现(无状态)
+
+10.
+
+
