@@ -617,3 +617,47 @@ scheme.sql 填写项目名字
 
 20. ./mvnw 启动应用
 
+## JHipster Registry
+
+- GitHub Clone JHipster Registry 项目
+
+    - git clone https://github.com/jhipster/jhipster-registry.git
+
+- 修改 jhipster-registry -> src -> main -> resources -> config -> application.yml
+
+        添加
+        security:
+                authentication:
+                    jwt:
+                        secret: test
+
+        最后显示：
+
+        jhipster:
+            swagger:
+                default-include-pattern: /(api|config)/.*
+                title: JHipster Registry API
+                description: JHipster Registry API documentation
+                version: ${info.project.version}
+            security:
+                authentication:
+                    jwt:
+                        secret: test
+
+- Download https://github.com/jhipster/jhipster-registry/releases  对应版本的 jhipster-registry-3.2.3.war
+
+    **放入项目根目录，与 central-config (配置中心平级)**
+
+- cd 到项目根目录
+
+- 运行
+
+        ./jhipster-registry-3.2.3.war --security.user.password=admin --jhipster.security.authentication.jwt.secret=test --spring.cloud.config.server.native.search-locations=file:./central-config
+
+- http:localhost:8761
+
+   - admin 用户名
+
+   - admin 密码
+
+
