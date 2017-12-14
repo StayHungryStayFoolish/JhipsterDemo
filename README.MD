@@ -1,6 +1,6 @@
 # JHipster 搭建微服务应用
 
-## JHipster 4.12.0 版本 操作步骤
+## 基于 JHipster 4.12.0 版本 创建综合应用
 
 1. mkdir jhipster
 
@@ -42,8 +42,7 @@
 
     - 选择 src 包内下的包路径，一般为域名反写 `com.jhipster.demo`
 
-10. Do you want to use the JHipster Registry to configure, monitor and scale your
-    application?
+10. Do you want to use the JHipster Registry to configure, monitor and scale your application?
 
     - 是否使用 JHipster 注册吧来配置，监控和扩展应用
 
@@ -103,8 +102,7 @@
 
     - `No` Hibernate 二级缓存
 
-15. Would you like to use Maven or Gradle for building the backend? (Use arrow key
-    s)
+15. Would you like to use Maven or Gradle for building the backend? (Use arrow keys)
 
     - 选择喜欢的版本依赖工具
 
@@ -145,8 +143,7 @@
 
     - AngularJS 1.x
 
-18. Would you like to enable *SASS* support using the LibSass stylesheet prepro
-    cessor? (y/N)
+18. Would you like to enable *SASS* support using the LibSass stylesheet preprocessor? (y/N)
 
     - 建议使用gulp定时构建，将sass转换成css而不是运行时处理
 
@@ -158,8 +155,8 @@
 
     - n
 
-20.  Besides JUnit and Karma, which testing frameworks would you like to use? (P
-     ress <space> to select, <a> to toggle all, <i> to inverse selection)
+20. Besides JUnit and Karma, which testing frameworks would you like to use?
+     (Press <space> to select, <a> to toggle all, <i> to inverse selection)
 
     - 选择压力测试
 
@@ -175,8 +172,7 @@
 
         - 使用 Protractor 对 AngularJS 进行集成测试
 
-21. Would you like to install other generators from the JHipster Marketplace? (
-    y/N)
+21. Would you like to install other generators from the JHipster Marketplace? (y/N)
 
     - N
 
@@ -189,3 +185,114 @@ scheme.sql 填写项目名字
 22. ./mvnw 运行项目
 
     yarn start 开启后端开发
+
+## 基于 JHipster 4.12.0 版本 创建微服务身份认证中心 UAA 应用
+
+1. mkdir uaa
+
+2. cd uaa
+
+3. yo jhipster
+
+4. Which *type* of application would you like to create? (Use
+   arrow keys)
+
+   - ✅ JHipster UAA server (for microservice OAuth2 authentication)
+
+5. What is the base name of your application? (uaa)
+
+   - uaa
+
+6. As you are running in a microservice architecture, on which
+    port would like your server to run? It should be unique to a
+   void port conflicts. (9999)
+
+   - 设置运行端口
+
+   - 9999
+
+7. What is your default Java package name? (com.jhipster.demo)
+
+   - 设置 src 目录下的包路径
+
+   - com.jhipster.demo
+
+8. Which service discovery server do you want to use?
+
+   - 选择注册服务中心
+
+   - ✅JHipster Registry (uses Eureka, provides Spring Cloud Config support and monitoring dashboards)
+
+        - Eureka 注册服务中心
+
+   - Consul
+
+        - Consul
+
+   - No service discovery
+
+9. Which *type* of database would you like to use? (Use arrow keys)
+
+   - ✅ SQL
+
+10. Which *production* database would you like to use? (Use arrow keys)
+
+   - 生产环境，选择数据库产品
+
+   - ✅ MySQL
+
+11. Which *development* database would you like to use? (Use arrow keys)
+
+   - 开发环境，选择数据库产品
+
+   - ✅ H2 with disk-based persistence
+
+       - 数据存储在磁盘的H2
+
+12. Do you want to use Hibernate 2nd level cache? (Use arrow keys)
+
+   - 是否使用 Hibernate 二级缓存
+
+   - Yes, with ehcache (local cache, for a single node)
+
+   - ✅ Yes, with HazelCast (distributed cache, for multiple nodes)
+
+   - [BETA] Yes, with Infinispan (hybrid cache, for multiple nodes)
+
+   - No
+
+13. Would you like to use Maven or Gradle for building the backend? (Use arrow keys)
+
+   - 选择构建工具
+
+   - ✅ Maven
+
+   - Gradle
+
+14. Which other technologies would you like to use? (Press <space> to select, <a> to toggle all, <i> to inverse selection)
+
+   - 选择其他技术，空格选择
+
+   - ✅ Search engine using Elasticsearch
+
+        - 搜索引擎
+
+   - API first development using swagger-codegen
+
+        - 开发
+
+   - Asynchronous messages using Apache Kafka
+
+        - Kafka 消息队列
+
+15. Would you like to enable internationalization support? (Y/n)
+
+   - 是否支持国际化
+
+   - Y
+
+16. Besides JUnit and Karma, which testing frameworks would you like to use?
+
+   -
+
+   -
