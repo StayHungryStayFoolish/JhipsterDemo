@@ -2,6 +2,8 @@
 
 ## 基于 JHipster 4.12.0 版本 创建综合应用
 
+#### 涉及到实体类的时候，需要先去创建当前项目名称的数据库 Database，并在 schema 中选择。
+
 1. mkdir jhipster
 
 2. cd jhipster
