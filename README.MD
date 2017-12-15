@@ -1,5 +1,21 @@
 # JHipster 搭建微服务应用
 
+## 项目启动
+
+1. jhipster-registry
+
+    - ./mvnw -Pprod package
+
+      该命令没有测试，只解释页面空白原因
+
+      可以启动，如果没有 -Pprod package ，页面 localhost:8761 页面空白，是因为 jhipster 还没有导入由模板生成的前段页面
+
+2. gateway / microservice 需要配置数据库连接信息。
+
+   如果想让项目启动时，自动穿件表，需要在 application-dev.yml 中加入: `spring.jpa.generate-ddl:true`
+
+   当遇到控制台 `liqubase` 有问题是，如果不需要 `liqubase` ，在 `application-dev.yml` 中加入 `spring.profiles.include:no-liqubase,swagger`
+
 ## 基于 JHipster 4.12.0 版本 创建综合应用
 
 #### 涉及到实体类的时候，需要先去创建当前项目名称的数据库 Database，并在 schema 中选择。
