@@ -243,3 +243,47 @@ N1:N2
     	Job{task(title)} to Task{job}
     }
 ```    
+
+    Entity 
+    
+```java
+    /*********** N1 Job   *************/
+    @Entity
+    @Table(name = "job")
+    public class Job implements Serializable {
+            
+            // (N1) Job 来定义关联关系
+            // 由于没有 mappedBy 属性，生成了一个中间的关系表  job_task 数据库关系中间表
+            @ManyToMany
+            @JoinTable(name = "job_task",
+                       joinColumns = @JoinColumn(name="jobs_id", referencedColumnName="id"),
+                       inverseJoinColumns = @JoinColumn(name="tasks_id", referencedColumnName="id"))
+            private Set<Task> tasks = new HashSet<>();
+
+    }
+    
+    /*********** N2 Task   *************/
+    @Entity
+    @Table(name = "task")
+    public class Task implements Serializable {
+    
+        // mappedBy 防止 Task 向 Job 产生中间关系表
+        @ManyToMany(mappedBy = "tasks")
+        @JsonIgnore
+        private Set<Job> jobs = new HashSet<>();
+    }
+```    
+
+    DTO (N1) Job 维护关系 
+    
+```java
+    public class JobDTO implements Serializable {
+        // （N2）TaskDTO 作为域 
+        private Set<TaskDTO> tasks = new HashSet<>();
+    }
+    
+    public class TaskDTO implements Serializable {
+    
+        // 并没有 JobDTO 作为任何 域
+    }
+```    
