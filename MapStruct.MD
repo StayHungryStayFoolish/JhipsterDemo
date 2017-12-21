@@ -48,9 +48,11 @@ Mapper 通用接口
 ```java
     public interface EntityMapper <D, E> {
     
+        // 以 Entity 结构参考配置 resource 映射关系
         public E toEntity(D dto);
     
-        public D toDto(E entity);
+        // 以 DTO 结构参考 配置 resource 映射关系
+        public D toDto(E entity); 
     
         public List <E> toEntity(List<D> dtoList);
     
@@ -75,6 +77,7 @@ Mapper 通用接口
     @Table(name = "department")
     public class Department implements Serializable {
         
+        // DTO id 作为 域 出现
         @OneToOne
         @JoinColumn(unique = true)
         private Location location;
@@ -82,7 +85,8 @@ Mapper 通用接口
         /**
          * A relationship
          * (1端)Department  (N 端)Employee
-         * 1端来维护关系
+         * 1端来维护关系，在 DTO 中，Employee 不在出现，
+         * 会在 N 端的 Employee 出现一个域 departmentId。 ---------------
         */
         @ApiModelProperty(value = "A relationship")
         @OneToMany(mappedBy = "department")
@@ -98,10 +102,15 @@ Mapper 通用接口
             
         // 主表 Entity ID
         private Long locationId;
+        
+        // 多端的 Employee 不会在 DTO 中维护，
+        // 在 EmployeeDto 使用 1端的 id 作为域维护
     }
 ```    
 
-    Mapper
+    Mapper 
+    1:1 从表Mapper 使用 source 来维护映射关系
+    1:N 1 端和 N 端都需要 source 来维护映射关系
 
 ```java
     // componentModel = "spring" 采用 spring 实现类方式
@@ -145,22 +154,25 @@ Mapper 通用接口
     	/**
     	* A relationship
     	*/
-    	Department{employee} to
+    	Department{employee} to Employee
     	/**
     	* Another side of the same relationship
     	*/
-    	Employee
+    	
     }
 ```
-
+    1 端 Employee Mapper 1 端 Department 见上 1:1 的 Mapper 示例
+    
 ```java
     @Mapper(componentModel = "spring", uses = {DepartmentMapper.class})
     public interface EmployeeMapper extends EntityMapper<EmployeeDTO, Employee> {
-    
+        
+        // 从Entity 的 Department 映射到 当前 DTO 的 departmentId 域
         @Mapping(source = "department.id", target = "departmentId")
         @Mapping(source = "manager.id", target = "managerId")
         EmployeeDTO toDto(Employee employee); 
     
+        // 从 DTO departmentId 映射到 Entity 的 Department 域
         @Mapping(source = "departmentId", target = "department")
         @Mapping(target = "jobs", ignore = true)
         @Mapping(source = "managerId", target = "manager")
@@ -177,3 +189,57 @@ Mapper 通用接口
     }
 
 ```
+
+N:1 
+
+    JDL 一个经理 管理 N 个员工 
+    
+```
+    relationship ManyToOne {
+    	Employee{manager} to Employee
+    }
+```    
+
+    Entity
+    
+```java
+    @Entity
+    @Table(name = "employee")
+    public class Employee implements Serializable {
+        
+        @ManyToOne
+        private Employee manager;
+        
+    }
+```    
+
+    DTO
+    
+```java
+    public class EmployeeDTO implements Serializable {
+        
+        // 1 端作为 id 域
+        private Long managerId;
+    }
+```    
+
+    Mapper 具体看上边 1:N 示例
+    
+```java
+    @Mapper(componentModel = "spring", uses = {DepartmentMapper.class})
+    public interface EmployeeMapper extends EntityMapper<EmployeeDTO, Employee> {
+           
+        @Mapping(source = "managerId", target = "manager")
+        Employee toEntity(EmployeeDTO employeeDTO);
+    }    
+```    
+
+N1:N2
+
+    JDL (N1)Job 来维护关系
+    
+```
+    relationship ManyToMany {
+    	Job{task(title)} to Task{job}
+    }
+```    
