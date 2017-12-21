@@ -31,15 +31,63 @@ MapStruct 是一个代码生成器，简化了 POJO 与 DTO 之间的映射关�
 
 - @Mapper 注解
 
+    1. default 默认情况，不适用任何组件形式，通过 Mappers.getMapper(Class) 方式获取自动生成的实例对象
+    
+    2. cdi 不太了解，使用 `@Inject` 注入
+    
+    3. spring 生成的实现类会自动添加 `@Component` ，可以通过 Spring 的 `@Autowired` 注入
+    
+    4. jsr330 生成实现类自动添加 `@javax.inject.Named` 和 `@Singleton` 注解，通过 `@Inject` 注入 
+    
+    推荐使用 spring 方式
+
+- 接口示例
+    
+Mapper 通用接口
+    
 ```java
+    public interface EntityMapper <D, E> {
+    
+        public E toEntity(D dto);
+    
+        public D toDto(E entity);
+    
+        public List <E> toEntity(List<D> dtoList);
+    
+        public List <D> toDto(List<E> entityList);
+    }
+```
+
+1:1 Mapper 接口
+
+    JDL
+
+```
+   relationship OneToOne {
+   	Department{location} to Location
+   } 
+```
+
+```java
+    // componentModel = "spring" 采用 spring 实现类方式
+    // uses = "LocationMapper.class" 要使用主表关联的 Mapper 内的 Entity、DTO
     @Mapper(componentModel = "spring", uses = {LocationMapper.class})
     public interface DepartmentMapper extends EntityMapper<DepartmentDTO, Department> {
     
+        // 1:1 不管在 Entity 还是 DTO 都是由从表来维护关系
+        // source = "主表.id" target = "当前从表的域"
+        // @Mapping 可以理解为 从 Location 类的 ID 映射到当前类的 locationId 域
         @Mapping(source = "location.id", target = "locationId")
         DepartmentDTO toDto(Department department); 
     
+        // (从)Department -> （主）Location 所以要关联
+        // source = "Entity 的域，等价于从表 FK"
+        // target = "主表对应的 Entity 实例"
         @Mapping(source = "locationId", target = "location")
-        @Mapping(target = "employees", ignore = true)
+        // (1端)Department <--> (N端) Employee 
+        // 由 1端来维护关系，所以 1端来确定 ignore 
+        // Entity 有 Set<Employee> 但是 DTO 不需要，所以 ignore = true
+        @Mapping(target = "employees", ignore = true)  
         Department toEntity(DepartmentDTO departmentDTO);
     
         default Department fromId(Long id) {
@@ -52,3 +100,45 @@ MapStruct 是一个代码生成器，简化了 POJO 与 DTO 之间的映射关�
         }
     }
 ```        
+
+1:N Mapper 接口
+
+    JDL 
+```
+    relationship OneToMany {
+    	Employee{job} to Job,
+    	/**
+    	* A relationship
+    	*/
+    	Department{employee} to
+    	/**
+    	* Another side of the same relationship
+    	*/
+    	Employee
+    }
+```
+
+```java
+    @Mapper(componentModel = "spring", uses = {DepartmentMapper.class})
+    public interface EmployeeMapper extends EntityMapper<EmployeeDTO, Employee> {
+    
+        @Mapping(source = "department.id", target = "departmentId")
+        @Mapping(source = "manager.id", target = "managerId")
+        EmployeeDTO toDto(Employee employee); 
+    
+        @Mapping(source = "departmentId", target = "department")
+        @Mapping(target = "jobs", ignore = true)
+        @Mapping(source = "managerId", target = "manager")
+        Employee toEntity(EmployeeDTO employeeDTO);
+    
+        default Employee fromId(Long id) {
+            if (id == null) {
+                return null;
+            }
+            Employee employee = new Employee();
+            employee.setId(id);
+            return employee;
+        }
+    }
+
+```
