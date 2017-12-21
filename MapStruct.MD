@@ -68,6 +68,41 @@ Mapper 通用接口
    } 
 ```
 
+    Entity 从表 维护关系
+    
+```java
+    @Entity
+    @Table(name = "department")
+    public class Department implements Serializable {
+        
+        @OneToOne
+        @JoinColumn(unique = true)
+        private Location location;
+        
+        /**
+         * A relationship
+         * (1端)Department  (N 端)Employee
+         * 1端来维护关系
+        */
+        @ApiModelProperty(value = "A relationship")
+        @OneToMany(mappedBy = "department")
+        @JsonIgnore
+        private Set<Employee> employees = new HashSet<>();
+    }
+```    
+
+    DTO 从表 维护关系
+
+```java
+    public class DepartmentDTO implements Serializable {
+            
+        // 主表 Entity ID
+        private Long locationId;
+    }
+```    
+
+    Mapper
+
 ```java
     // componentModel = "spring" 采用 spring 实现类方式
     // uses = "LocationMapper.class" 要使用主表关联的 Mapper 内的 Entity、DTO
