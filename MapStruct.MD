@@ -287,3 +287,94 @@ N1:N2
         // 并没有 JobDTO 作为任何 域
     }
 ```    
+
+
+## Entity  Class 结构
+	
+	@ApiModel(description = "JHipster jh 文件生成是附带，表示描述类信息")
+	@Entity
+	@Table(name="数据库表")
+	public class EntityName implements Serializable{
+		
+		// @Size(min = 10,max = 20) 验证对象是否再给定范围
+		// @Null 反正是否为空
+		// @NotNull 验证是否为 非空
+		// @Pattern(regexp = 表达式) 验证 String 对象 是否符合正则表达规则
+		// @Email 验证 String 对象是否符合有效 email 地址规范
+		
+		
+		@Id
+		@GeneratedValue(strategy = GenerationType.IDENTITY) // 自增
+		private Long id;
+		
+		@Column(name = "cloumn_name")
+		private Type cloumn_name;
+		
+		// 枚举类型
+		@Enumerated(EnumType.STRING)
+		private EnumnClass enumn;
+		
+		/*************  对应关系 ***********************/
+		// 1:1 双向关系开启 unique = true
+		@OneToOne
+	    @JoinColumn(unique = true)
+    	private RelateClass instance;
+    	
+    	// N:1 对应关系，当前类则为 Many	
+    	@ManyToOne
+	    private OneRelationClass oneClass;
+	    
+	    // 1:N 对应关系
+	    // mapperBy 双向关系中，定义在被拥有方，指向拥有放 N:1 不存在该属性，该属性避免生成中间表
+	    // @JsonIgnore 生成 Json 数据时，忽略该属性
+	    // @JsonFormat(pattern = “yyyy-MM-dd HH-mm-ss”) 以该模板生成
+	    // @Transient 表示该属性并非数据库字段映射。
+	    @OneToMany(mappedBy = "employee")
+	    @JsonIgnore
+    	private Set<Job> jobs = new HashSet<>();
+	    
+	    /******** N : N 会生成 job_task 关系表，别的不会
+	    // N:N 
+	    // name = "当前表要连接的表名"
+	    // joinColumns 表示可以接受多个 @JoinColumn,用于配置连接表外键信息 name 当前主键，referencedColumnName 外键 ID
+	    // inverseJoinColumns 表示可以接受多个 @JoinColumn,用于配置外键对应当前表的主键 name 外键主键，referencedColumnName 当前主键
+	    @ManyToMany
+	    @JoinTable(name = "job_task",
+               joinColumns = @JoinColumn(name="jobs_id", referencedColumnName="id"),
+               inverseJoinColumns = @JoinColumn(name="tasks_id", referencedColumnName="id"))
+    	private Set<Task> tasks = new HashSet<>();
+	    
+	    // @ApiModelProperty 对该属性的注解 
+	    // value 属性简短性描述
+	    // example 属性示例值
+	    // required 是否为必须值
+        @ApiModelProperty(value = "The firstname attribute.")
+	    @Column(name = "first_name")
+	    private String firstName;
+	    
+	    // 拓展 @ApiModel 是对类的描述
+	    // value 类的别名，默认为类名
+	    // description 类的详细描述
+		
+		
+		/********** 方法 **************/
+		getter();
+		setter();
+		
+		@Override
+		public boolean equals(Object o){
+			比较 id,返回 boolean
+		}
+		
+		@Override
+		public int hashCode(){
+			返回 id 的 hash
+		}
+		
+		@Override
+		public String toString(){
+			返回 toString 
+		}	
+		
+	}
+	
