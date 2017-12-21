@@ -1,4 +1,4 @@
-# MapStruct
+# MapStruct 结合 JHipster
 
 ## What`s MapStruct ?
 
@@ -60,11 +60,12 @@ Mapper 通用接口
     }
 ```
 
-1:1 Mapper 接口
+1a:1b **Entity、DTO、Mapper 都有 1a (从表) 来维护关系**
 
     JDL
 
 ```
+    // 从表 { 主表 } to 主表
    relationship OneToOne {
    	Department{location} to Location
    } 
@@ -73,6 +74,7 @@ Mapper 通用接口
     Entity 从表 维护关系
     
 ```java
+    /*********** 从表 Department   *************/
     @Entity
     @Table(name = "department")
     public class Department implements Serializable {
@@ -83,7 +85,7 @@ Mapper 通用接口
         private Location location;
         
         /**
-         * A relationship
+         * 1:N
          * (1端)Department  (N 端)Employee
          * 1端来维护关系，在 DTO 中，Employee 不在出现，
          * 会在 N 端的 Employee 出现一个域 departmentId。 ---------------
@@ -93,11 +95,20 @@ Mapper 通用接口
         @JsonIgnore
         private Set<Employee> employees = new HashSet<>();
     }
+    
+    /*********** 主表 Location   *************/
+    @Entity
+    @Table(name = "location")
+    public class Location implements Serializable {
+    
+        // 并不维护任何从表信息
+    }
 ```    
 
     DTO 从表 维护关系
 
 ```java
+    /*********** 从表 DepartmentDTO   *************/
     public class DepartmentDTO implements Serializable {
             
         // 主表 Entity ID
@@ -106,6 +117,12 @@ Mapper 通用接口
         // 多端的 Employee 不会在 DTO 中维护，
         // 在 EmployeeDto 使用 1端的 id 作为域维护
     }
+    
+    /*********** 主表 LocationDTO   *************/
+    public class LocationDTO implements Serializable {
+        
+        // 并不维护任何从表信息
+    }
 ```    
 
     Mapper 
@@ -113,6 +130,8 @@ Mapper 通用接口
     1:N 1 端和 N 端都需要 source 来维护映射关系
 
 ```java
+    /*********** 从表 DepartmentMapper   *************/
+    
     // componentModel = "spring" 采用 spring 实现类方式
     // uses = "LocationMapper.class" 要使用主表关联的 Mapper 内的 Entity、DTO
     @Mapper(componentModel = "spring", uses = {LocationMapper.class})
@@ -143,24 +162,119 @@ Mapper 通用接口
             return department;
         }
     }
+    
+    /*********** 主表 LocationMapper   *************/
+    @Mapper(componentModel = "spring", uses = {CountryMapper.class})
+    public interface LocationMapper extends EntityMapper<LocationDTO, Location> {
+        
+        // 并不维护从表任何信息，注释是维护的别的关系
+    }
 ```        
 
-1:N Mapper 接口
+1:N  
 
-    JDL 
+- Entity 由 `1端` 维护关系，不同别的是多端会有一个域的存在
+
+- DTO 1端不维护关系，N 端会出现 1端的 id 域
+
+- Mapper 由 `1端` 维护关系 ,uses 既是维护关系的，具体的 source/target 根据转换类型结构确定 
+
+    JDL  为了示范两种关系，分别起名 A / B
 ```
     relationship OneToMany {
+    
+        /**
+         * 关系 A
+        */
     	Employee{job} to Job,
     	/**
-    	* A relationship
-    	*/
+         * 关系 B
+        */
     	Department{employee} to Employee
-    	/**
-    	* Another side of the same relationship
-    	*/
-    	
+    
     }
 ```
+
+    Entity 
+    
+```java
+    /*********** A 关系 1 端 Employee   *************/
+    
+    @Entity
+    @Table(name = "employee")
+    public class Employee implements Serializable {
+         
+         @OneToMany(mappedBy = "employee")
+         @JsonIgnore
+         private Set<Job> jobs = new HashSet<>();
+         
+         // 关系 B 的 N 端
+         @ManyToOne
+         private Department department;
+    }
+    
+    /*********** A 关系 N 端 Job   *************/
+    @Entity
+    @Table(name = "job")
+    public class Job implements Serializable {
+        
+         @ManyToOne
+         private Employee employee;
+    }
+    
+    
+    /*********** B 关系 1 端 Department   *************/
+    @Entity
+    @Table(name = "department")
+    public class Department implements Serializable {
+        
+        @ApiModelProperty(value = "A relationship") // JDL 注释产生
+        @OneToMany(mappedBy = "department")
+        @JsonIgnore
+        private Set<Employee> employees = new HashSet<>();
+    }
+    
+    /*********** B 关系 N 端 Employee   *************/
+    @Entity
+    @Table(name = "employee")
+    public class Employee implements Serializable {
+        
+        // 关系 B 的 N 端
+        @ManyToOne
+        private Department department;
+    }
+```    
+
+    DTO 1端 不维护， N 端出现 (1端)id域 
+    
+```java
+    /*********** A 关系 1 端 EmployeeDTO   *************/
+    
+    public class EmployeeDTO implements Serializable {
+        
+        // 1 端不做任何维护
+    }
+    
+    /*********** A 关系 N 端 JobDTO   *************/
+    public class JobDTO implements Serializable {
+            
+        // N 端出现 (1端)id域 
+        private Long employeeId;
+    }
+    
+    /*********** B 关系 1 端 DepartmentDTO   *************/
+    public class DepartmentDTO implements Serializable {
+        
+        // 1 端不做任何维护
+    }
+    
+    public class EmployeeDTO implements Serializable {
+            
+        // N 端出现 (1端)id域 
+        private Long departmentId;
+    }
+```    
+
     1 端 Employee Mapper 1 端 Department 见上 1:1 的 Mapper 示例
     
 ```java
