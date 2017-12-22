@@ -404,7 +404,8 @@ N1:N2
 
 
 ## Entity  Class 结构
-	
+
+```java
 	@ApiModel(description = "JHipster jh 文件生成是附带，表示描述类信息")
 	@Entity
 	@Table(name="数据库表")
@@ -477,18 +478,19 @@ N1:N2
 		
 		@Override
 		public boolean equals(Object o){
-			比较 id,返回 boolean
+		    // 返回 id 的 hash
 		}
 		
 		@Override
 		public int hashCode(){
-			返回 id 的 hash
+		    // 返回 id 的 hash
 		}
 		
 		@Override
 		public String toString(){
-			返回 toString 
+		    // 返回 id 的 hash
 		}	
 		
 	}
 	
+```
